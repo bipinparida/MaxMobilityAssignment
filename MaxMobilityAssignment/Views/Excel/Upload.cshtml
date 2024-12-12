@@ -1,0 +1,60 @@
+﻿@using MaxMobilityAssignment.Models
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+@using (Html.BeginForm("Upload", "Excel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h3>Upload Excel File</h3>
+
+    <div class="mt-2">
+        <label class="form-label" for="file">Choose Excel File:</label>
+        <input class="form-control" type="file" name="file" id="file" accept=".xlsx" required />
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </div>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <p class="mt-2 text-success">@ViewBag.Message</p>
+
+    if (ViewBag.DownloadLink != null)
+    {
+        <p><a class="btn btn-secondary text-white" href="@ViewBag.DownloadLink">Download Uploaded File</a></p>
+    }
+}
+
+@if (ViewBag.Result != null)
+{
+    <h4>Upload Status:</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>SL No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone No</th>
+                <th>Address</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in (List<UploadResult>)ViewBag.Result)
+            {
+                <tr>
+                    <td>@item.SerialNo</td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNo</td>
+                    <td>@item.Address</td>
+                    <td>@item.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
